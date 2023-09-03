@@ -72,7 +72,7 @@ public class Demo {
                 break;
             }
         }
-        System.out.println("Thank you for using KBP's Anime Filter!");
+        System.out.println("\nThank you for using KBP's Anime Filter!");
     }
 
     public static void printAnimeList(List<Anime> animeList) {
