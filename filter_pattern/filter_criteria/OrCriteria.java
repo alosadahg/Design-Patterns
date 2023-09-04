@@ -17,7 +17,10 @@ public class OrCriteria implements Criteria {
         List<Anime> filteredAnime = new ArrayList<Anime>();
 
         for (Criteria criteria : criterias) {
-            filteredAnime.addAll(criteria.meetsCriteria(animeList));
+            List<Anime> animeMet = criteria.meetsCriteria(animeList);
+            for(Anime ani : animeMet) {
+                if(!filteredAnime.contains(ani)) filteredAnime.add(ani);
+            }
         }
 
         return filteredAnime;
