@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Demo {
     public static void main(String[] args) {
-        ExcelReader reader = new ExcelReader();
+        AnimeSource reader = new AnimeSource();
         System.out.println("Welcome to KBP's Anime Filter!");
         System.out.println("Loading...");
 
