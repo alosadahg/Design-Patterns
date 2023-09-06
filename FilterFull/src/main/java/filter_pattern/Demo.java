@@ -8,10 +8,9 @@ import java.util.Scanner;
 
 public class Demo {
     public static void main(String[] args) {
-
-        System.out.println("Welcome to KBP's Anime Filter!");
-        Scanner scan = new Scanner(System.in);
         ExcelReader reader = new ExcelReader();
+        System.out.println("Welcome to KBP's Anime Filter!");
+        System.out.println("Loading...");
 
         List<Anime> animeList = reader.generateAnime();
 
@@ -23,7 +22,7 @@ public class Demo {
 
         String input;
         boolean flag = true;
-
+        Scanner scan = new Scanner(System.in);
         while(flag==true){
             List<Criteria> criterias = new ArrayList<Criteria>();
             do {

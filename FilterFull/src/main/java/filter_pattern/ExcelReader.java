@@ -13,7 +13,7 @@ public class ExcelReader {
     public List<Anime> generateAnime() {
         try {
             // Load the Excel file
-            FileInputStream fis = new FileInputStream(new File("src/lib/AnimeList.xlsx"));
+            FileInputStream fis = new FileInputStream(new File("FilterFull/src/lib/AnimeList.xlsx"));
             Workbook workbook = new XSSFWorkbook(fis);
 
             // Get the first sheet
