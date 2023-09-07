@@ -19,4 +19,10 @@ public class RomanceCriteria implements Criteria{
         }
         return romanceAnime;
     }
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        if(anime!=null && anime.getGenre().contains("Romance"))
+            return true;
+        return false;
+    }
 }

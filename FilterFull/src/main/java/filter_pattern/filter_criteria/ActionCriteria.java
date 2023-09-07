@@ -19,4 +19,11 @@ public class ActionCriteria implements Criteria{
         }
         return actionAnime;
     }
+
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        if(anime!=null && anime.getGenre().contains("Action"))
+            return true;
+        return false;
+    }
 }

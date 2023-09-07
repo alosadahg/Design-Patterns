@@ -21,4 +21,16 @@ public class AndCriteria implements Criteria{
 
         return filteredAnime;
     }
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        boolean flag = false;
+        for (Criteria criteria : criterias) {
+            if(criteria.meetsCriteria(anime)) {
+                flag = true;
+            } else {
+                flag = false;
+            }
+        }
+        return flag;
+    }
 }

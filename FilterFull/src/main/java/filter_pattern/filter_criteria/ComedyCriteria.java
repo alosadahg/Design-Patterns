@@ -19,4 +19,11 @@ public class ComedyCriteria implements Criteria{
         }
         return comedyAnime;
     }
+
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        if(anime!=null && anime.getGenre().contains("Comedy"))
+            return true;
+        return false;
+    }
 }

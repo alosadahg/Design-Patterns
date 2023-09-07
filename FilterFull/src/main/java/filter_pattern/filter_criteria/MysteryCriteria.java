@@ -19,4 +19,11 @@ public class MysteryCriteria implements Criteria{
         }
         return mysteryAnime;
     }
+
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        if(anime!=null && anime.getGenre().contains("Mystery"))
+            return true;
+        return false;
+    }
 }

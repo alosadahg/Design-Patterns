@@ -25,4 +25,15 @@ public class OrCriteria implements Criteria {
 
         return filteredAnime;
     }
+
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        boolean flag = false;
+        for (Criteria criteria : criterias) {
+            if(criteria.meetsCriteria(anime)) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
 }

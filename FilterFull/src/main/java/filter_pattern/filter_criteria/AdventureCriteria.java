@@ -19,4 +19,10 @@ public class AdventureCriteria implements Criteria{
         }
         return adventureAnime;
     }
+    @Override
+    public boolean meetsCriteria(Anime anime) {
+        if(anime!=null && anime.getGenre().contains("Adventure"))
+            return true;
+        return false;
+    }
 }
