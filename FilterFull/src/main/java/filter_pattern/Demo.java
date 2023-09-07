@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class Demo {
     public static void main(String[] args) {
         AnimeSource reader = new AnimeSource();
-        System.out.println("Welcome to KBP's Anime Filter!");
-        System.out.println("Loading...");
+        System.out.println("Welcome to KBP's Anime Filter");
+        System.out.println("Find the perfect anime to watch!");
 
         List<Anime> animeList = reader.generateAnime();
 
@@ -23,37 +23,65 @@ public class Demo {
         String input;
         boolean flag = true;
         Scanner scan = new Scanner(System.in);
+        List<String> criteriasAdded = new ArrayList<>();
+        List<Criteria> criterias = new ArrayList<Criteria>();
+
         while(flag==true){
-            List<Criteria> criterias = new ArrayList<Criteria>();
-            do {
-                System.out.println(String.format("Please select a genre:\n%-8s %-11s %-8s %-9s %-10s %-6s", "Action", "Adventure", "Comedy", "Mystery", "Romance", "Done"));
-                input = scan.nextLine().toLowerCase();
-                switch (input) {
-                    case "action":
-                        criterias.add(action);
-                        break;
-                    case "adventure":
-                        criterias.add(adventure);
-                        break;
-                    case "comedy":
-                        criterias.add(comedy);
-                        break;
-                    case "mystery":
-                        criterias.add(mystery);
-                        break;
-                    case "romance":
-                        criterias.add(romance);
-                        break;
-                    case "done":
-                        break;
-                    default:
-                        System.out.println("Invalid input. Please try again.");
-                }
-            } while (!input.equals("done"));
-            if(criterias.isEmpty()) {
+            System.out.printf("Filter the anime by:\n%-7s %-8s %-7s", "Type", "Genre", "Exit");
+            System.out.println("\n(You can select multiple filters, just separate them with a comma.\nIf you select exit, the filter will not execute)");
+            String filterS = scan.nextLine().toLowerCase();
+            if(filterS.contains("exit")) {
                 flag = false;
                 break;
             }
+            List<String> filter = new ArrayList<String>();
+            if(filterS.contains("type")) {
+                filter.add("Type");
+            }
+            if(filterS.contains("genre")) {
+                filter.add("Genre");
+            }
+            if(filterS.contains("studio")) {
+                filter.add("Studio");
+            }
+            printStringList(filter,"filters");
+            if(!criteriasAdded.isEmpty()) {
+                System.out.println("Do you want to use the same genres you have selected recently? Y/N");
+                String reuse = scan.nextLine().toLowerCase();
+                if (reuse.charAt(0) != 'y') {
+                    criteriasAdded.clear();
+                    criterias.clear();
+                }
+            }
+            if(criteriasAdded.isEmpty() && filter.contains("Genre")) {
+                System.out.printf("Please enter a genre (you may also select multiple genres, just separate them with a comma):\n%-8s %-11s %-8s %-9s %-10s%n", "Action", "Adventure", "Comedy", "Mystery", "Romance");
+                input = scan.nextLine().toLowerCase();
+                if(input.contains("action")) {
+                    criterias.add(action);
+                    criteriasAdded.add("Action");
+                }
+                if(input.contains("adventure")) {
+                    criterias.add(adventure);
+                    criteriasAdded.add("Adventure");
+                }
+                if(input.contains("comedy")) {
+                    criterias.add(comedy);
+                    criteriasAdded.add("Comedy");
+                }
+                if(input.contains("mystery")) {
+                    criterias.add(mystery);
+                    criteriasAdded.add("Mystery");
+                }
+                if(input.contains("romance")) {
+                    criterias.add(romance);
+                    criteriasAdded.add("Romance");
+                }
+                if(criterias.isEmpty()) {
+                    flag = false;
+                    break;
+                }
+            }
+            printStringList(criteriasAdded,"genres");
             System.out.println("Perform an exact-match filter? Y/N");
             String exact = scan.nextLine().toLowerCase();
             System.out.println("\nHere is the generated list of anime:");
@@ -74,6 +102,20 @@ public class Demo {
         }
         System.out.println("\nThank you for using " +
                 "KBP's Anime Filter!");
+    }
+
+    public static void printStringList(List<String> sList, String id) {
+        System.out.println("Here are the " + id + " selected:");
+        int last = sList.size()-1;
+        int i = 0;
+        for(String s: sList) {
+            System.out.print(s);
+            if(i!=last) {
+                System.out.print(", ");
+            }
+            i++;
+        }
+        System.out.println();
     }
 
     public static void printAnimeList(List<Anime> animeList) {
