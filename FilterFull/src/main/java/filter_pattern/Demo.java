@@ -26,9 +26,9 @@ public class Demo {
         List<String> genresAdded = new ArrayList<>();
         List<String> type = new ArrayList<>();
         List<String> filter = new ArrayList<>();
-        List<Criteria> filtersSelected = new ArrayList<>();
 
         while(true){
+            List<Criteria> filtersSelected = new ArrayList<>();
             filter = reuseSelection(filter, "filter","%-7s %-8s %-7s",new String[] {"Type", "Genre", "Exit"});
             if(filter.isEmpty()) {
                 break;
@@ -44,7 +44,7 @@ public class Demo {
             else if (type.contains("TV Series") && !type.contains("Movie")) {
                 filtersSelected.add(tv);
             }
-
+            System.out.println("filters:" + filtersSelected);
             if(genresAdded.contains("Action")) {
                 filtersSelected.add(action);
             }
