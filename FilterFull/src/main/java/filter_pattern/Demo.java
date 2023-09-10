@@ -22,12 +22,11 @@ public class Demo {
         MovieType movie = new MovieType();
         SeriesType tv = new SeriesType();
 
-        String input = null;
         Scanner scan = new Scanner(System.in);
         List<String> genresAdded = new ArrayList<>();
-        List<String> type = new ArrayList<String>();
-        List<String> filter = new ArrayList<String>();
-        List<Criteria> filtersSelected = new ArrayList<Criteria>();
+        List<String> type = new ArrayList<>();
+        List<String> filter = new ArrayList<>();
+        List<Criteria> filtersSelected = new ArrayList<>();
 
         while(true){
             filter = reuseSelection(filter, "filter","%-7s %-8s %-7s",new String[] {"Type", "Genre", "Exit"});
@@ -132,9 +131,9 @@ public class Demo {
         List<String> filter = new ArrayList<>();
         System.out.printf("Please enter a " + id + " (you may also select multiple " + id +"s, " +
                 "just separate them with a comma):" +
-                "\n"+spacing+"\n", options);
+                "\n"+spacing+"\n", (Object[]) options);
         input = scan.nextLine().toLowerCase();
-        if(input.contains("Exit") || input.contains("exit")) {
+        if(input.contains("exit")) {
             return filter;
         }
         for(String o: options) {
