@@ -12,15 +12,12 @@ import java.util.List;
 public class AnimeSource {
     public List<Anime> generateAnime() {
         try {
-            // Load the Excel file
             FileInputStream fis = new FileInputStream(new File("FilterFull/src/lib/AnimeList.xlsx"));
             Workbook workbook = new XSSFWorkbook(fis);
 
-            // Get the first sheet
             Sheet sheet = workbook.getSheetAt(0);
             List<Anime> animeList = new ArrayList<Anime>();
 
-            // Iterate through rows and columns
             for (Row row : sheet) {
                 int i = 0;
                 String title = null, studio = null, date = null, type = null;
@@ -41,10 +38,11 @@ public class AnimeSource {
                     }
                     i++;
                 }
-                Anime ani = new Anime(title, studio, date, type, genre);
-                animeList.add(ani);
+                if(type!=null&&genre!=null) {
+                    Anime ani = new Anime(title, studio, date, type, genre);
+                    animeList.add(ani);
+                }
             }
-            // Close the file input stream
             fis.close();
             workbook.close();
             return animeList;

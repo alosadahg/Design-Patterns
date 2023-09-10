@@ -1,26 +1,27 @@
 package filter_pattern.filter_criteria;
 
 import filter_pattern.Anime;
-import filter_pattern.Demo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieType implements Criteria{
+public class MysteryGenre implements Criteria{
 
     @Override
     public List<Anime> meetsCriteria(List<Anime> animeList) {
-        List<Anime> movieAnime = new ArrayList<Anime>();
+        List<Anime> mysteryAnime = new ArrayList<Anime>();
         for(Anime anime: animeList) {
-            if(anime.getType().equalsIgnoreCase("Movie")) {
-                movieAnime.add(anime);
+            List<String> genre = anime.getGenre();
+            if(genre.contains("Mystery")) {
+                mysteryAnime.add(anime);
             }
         }
-        return movieAnime;
+        return mysteryAnime;
     }
+
     @Override
     public boolean meetsCriteria(Anime anime) {
-        if(anime.getType().equals("Movie"))
+        if(anime.getGenre().contains("Mystery"))
             return true;
         return false;
     }

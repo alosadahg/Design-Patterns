@@ -2,6 +2,7 @@ package filter_pattern.filter_criteria;
 
 import filter_pattern.Anime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AndCriteria implements Criteria{
@@ -13,24 +14,23 @@ public class AndCriteria implements Criteria{
 
     @Override
     public List<Anime> meetsCriteria(List<Anime> animeList) {
-        List<Anime> filteredAnime = animeList;
+        List<Anime> filteredAnime = new ArrayList<>();
 
-        for (Criteria criteria : criterias) {
-            filteredAnime = criteria.meetsCriteria(filteredAnime);
+        for(Anime ani: animeList) {
+            if(meetsCriteria(ani)) {
+                filteredAnime.add(ani);
+            }
         }
 
         return filteredAnime;
     }
     @Override
     public boolean meetsCriteria(Anime anime) {
-        boolean flag = false;
         for (Criteria criteria : criterias) {
-            if(criteria.meetsCriteria(anime)) {
-                flag = true;
-            } else {
-                flag = false;
+            if(!criteria.meetsCriteria(anime)) {
+                return false;
             }
         }
-        return flag;
+        return true;
     }
 }

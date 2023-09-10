@@ -14,89 +14,66 @@ public class Demo {
 
         List<Anime> animeList = reader.generateAnime();
 
-        ActionCriteria action = new ActionCriteria();
-        AdventureCriteria adventure = new AdventureCriteria();
-        ComedyCriteria comedy = new ComedyCriteria();
-        MysteryCriteria mystery = new MysteryCriteria();
-        RomanceCriteria romance = new RomanceCriteria();
+        ActionGenre action = new ActionGenre();
+        AdventureGenre adventure = new AdventureGenre();
+        ComedyGenre comedy = new ComedyGenre();
+        MysteryGenre mystery = new MysteryGenre();
+        RomanceGenre romance = new RomanceGenre();
+        MovieType movie = new MovieType();
+        SeriesType tv = new SeriesType();
 
-        String input;
-        boolean flag = true;
+        String input = null;
         Scanner scan = new Scanner(System.in);
-        List<String> criteriasAdded = new ArrayList<>();
-        List<Criteria> criterias = new ArrayList<Criteria>();
+        List<String> genresAdded = new ArrayList<>();
+        List<String> type = new ArrayList<String>();
+        List<String> filter = new ArrayList<String>();
+        List<Criteria> filtersSelected = new ArrayList<Criteria>();
 
-        while(flag==true){
-            System.out.printf("Filter the anime by:\n%-7s %-8s %-7s", "Type", "Genre", "Exit");
-            System.out.println("\n(You can select multiple filters, just separate them with a comma.\nIf you select exit, the filter will not execute)");
-            String filterS = scan.nextLine().toLowerCase();
-            if(filterS.contains("exit")) {
-                flag = false;
+        while(true){
+            filter = reuseSelection(filter, "filter","%-7s %-8s %-7s",new String[] {"Type", "Genre", "Exit"});
+            if(filter.isEmpty()) {
                 break;
             }
-            List<String> filter = new ArrayList<String>();
-            if(filterS.contains("type")) {
-                filter.add("Type");
+            type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "TV Series"});
+            genresAdded = reuseSelection(genresAdded, "genres","%-8s %-11s %-8s %-9s %-10s", new String[]{"Action", "Adventure", "Comedy", "Mystery", "Romance"});
+
+            if(type.contains("Movie") && !type.contains("TV Series")) {
+                filtersSelected.add(movie);
             }
-            if(filterS.contains("genre")) {
-                filter.add("Genre");
+            else if (type.contains("TV Series") && !type.contains("Movie")) {
+                filtersSelected.add(tv);
             }
-            if(filterS.contains("studio")) {
-                filter.add("Studio");
+
+            if(genresAdded.contains("Action")) {
+                filtersSelected.add(action);
             }
-            printStringList(filter,"filters");
-            if(!criteriasAdded.isEmpty()) {
-                System.out.println("Do you want to use the same genres you have selected recently? Y/N");
-                String reuse = scan.nextLine().toLowerCase();
-                if (reuse.charAt(0) != 'y') {
-                    criteriasAdded.clear();
-                    criterias.clear();
-                }
+            if(genresAdded.contains("Adventure")) {
+                filtersSelected.add(adventure);
             }
-            if(criteriasAdded.isEmpty() && filter.contains("Genre")) {
-                System.out.printf("Please enter a genre (you may also select multiple genres, just separate them with a comma):\n%-8s %-11s %-8s %-9s %-10s%n", "Action", "Adventure", "Comedy", "Mystery", "Romance");
-                input = scan.nextLine().toLowerCase();
-                if(input.contains("action")) {
-                    criterias.add(action);
-                    criteriasAdded.add("Action");
-                }
-                if(input.contains("adventure")) {
-                    criterias.add(adventure);
-                    criteriasAdded.add("Adventure");
-                }
-                if(input.contains("comedy")) {
-                    criterias.add(comedy);
-                    criteriasAdded.add("Comedy");
-                }
-                if(input.contains("mystery")) {
-                    criterias.add(mystery);
-                    criteriasAdded.add("Mystery");
-                }
-                if(input.contains("romance")) {
-                    criterias.add(romance);
-                    criteriasAdded.add("Romance");
-                }
-                if(criterias.isEmpty()) {
-                    flag = false;
-                    break;
-                }
+            if(genresAdded.contains("Comedy")) {
+                filtersSelected.add(comedy);
             }
-            printStringList(criteriasAdded,"genres");
-            System.out.println("Perform an exact-match filter? Y/N");
-            String exact = scan.nextLine().toLowerCase();
+            if(genresAdded.contains("Mystery")) {
+                filtersSelected.add(mystery);
+            }
+            if(genresAdded.contains("Romance")) {
+                filtersSelected.add(romance);
+            }
+
+            List<Anime> filtered;
+
             System.out.println("\nHere is the generated list of anime:");
-            if (exact.charAt(0) == 'y') {
-                AndCriteria searchGenre = new AndCriteria(criterias);
-                printAnimeList(searchGenre.meetsCriteria(animeList));
-            } else {
-                OrCriteria searchGenre = new OrCriteria(criterias);
-                printAnimeList(searchGenre.meetsCriteria(animeList));
-            }
+            AndCriteria searchGenre = new AndCriteria(filtersSelected);
+            filtered = searchGenre.meetsCriteria(animeList);
+
+            if(!filtered.isEmpty())
+                printAnimeList(filtered);
+            else
+                System.out.println("(There is no anime found with those filters. Please try again.)");
 
             System.out.println("\nPerform another filter? Y/N");
             String again = scan.nextLine().toLowerCase();
             if (again.charAt(0) != 'y') {
-                flag = false;
                 break;
             }
         }
@@ -132,5 +109,39 @@ public class Demo {
         for(Anime a: animeList) {
             a.printAnime(titleMax,studioMax);
         }
+    }
+    public static List<String> reuseSelection(List<String> l1, String id, String spacing, String[] options) {
+        Scanner scan = new Scanner(System.in);
+        if(!l1.isEmpty()) {
+            System.out.println("Do you want to use the same " + id +
+                    " you have selected recently? Y/N");
+            String reuse = scan.nextLine().toLowerCase();
+            if (reuse.charAt(0) != 'y')
+                l1.clear();
+        }
+        if(l1.isEmpty()) {
+            l1 = getSelection(id,spacing, options);
+        }
+        printStringList(l1,id);
+        return l1;
+    }
+
+    private static List<String> getSelection (String id, String spacing, String[] options) {
+        Scanner scan = new Scanner(System.in);
+        String input;
+        List<String> filter = new ArrayList<>();
+        System.out.printf("Please enter a " + id + " (you may also select multiple " + id +"s, " +
+                "just separate them with a comma):" +
+                "\n"+spacing+"\n", options);
+        input = scan.nextLine().toLowerCase();
+        if(input.contains("Exit") || input.contains("exit")) {
+            return filter;
+        }
+        for(String o: options) {
+            if(input.contains(o.toLowerCase())) {
+                filter.add(o);
+            }
+        }
+        return filter;
     }
 }
