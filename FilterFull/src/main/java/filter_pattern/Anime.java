@@ -3,11 +3,11 @@ package filter_pattern;
 import java.util.List;
 
 public class Anime {
-    private String title;
-    private  String studio;
-    private  String releaseDate;
-    private String type;
-    private List<String> genre;
+    private final String title;
+    private final String studio;
+    private final String releaseDate;
+    private final String type;
+    private final List<String> genre;
 
     public Anime(String title, String studio, String releaseDate, String type, List<String> genre) {
         this.title = title;
@@ -42,7 +42,7 @@ public class Anime {
         String studioSpace = "%-" + studioSpacing + "s";
         String format = "Title: " + titleSpace + "  Type: %-5s" + "  Studio: " + studioSpace +
                 "  Release Date: %-11s" + "  Genre: ";
-        System.out.print(String.format(format, title, type, studio, releaseDate));
+        System.out.printf(format, title, type, studio, releaseDate);
         String separator = "";
         for(String g: genre) {
             System.out.print(separator + g);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AndCriteria implements Criteria{
-    private List<Criteria> criterias;
+    private final List<Criteria> criterias;
 
     public AndCriteria(List<Criteria> criterias) {
         this.criterias = criterias;

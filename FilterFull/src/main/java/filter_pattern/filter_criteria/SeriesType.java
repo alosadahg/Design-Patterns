@@ -9,7 +9,7 @@ public class SeriesType implements Criteria{
 
     @Override
     public List<Anime> meetsCriteria(List<Anime> animeList) {
-        List<Anime> TVAnime = new ArrayList<Anime>();
+        List<Anime> TVAnime = new ArrayList<>();
         for(Anime anime: animeList) {
             if(anime!=null && anime.getType().equalsIgnoreCase("TV")) {
                 TVAnime.add(anime);
@@ -19,8 +19,6 @@ public class SeriesType implements Criteria{
     }
     @Override
     public boolean meetsCriteria(Anime anime) {
-        if(anime.getType().equals("TV"))
-            return true;
-        return false;
+        return anime.getType().equals("TV");
     }
 }

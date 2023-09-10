@@ -3,7 +3,6 @@ package filter_pattern;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,16 +11,16 @@ import java.util.List;
 public class AnimeSource {
     public List<Anime> generateAnime() {
         try {
-            FileInputStream fis = new FileInputStream(new File("FilterFull/src/lib/AnimeList.xlsx"));
+            FileInputStream fis = new FileInputStream("FilterFull/src/lib/AnimeList.xlsx");
             Workbook workbook = new XSSFWorkbook(fis);
 
             Sheet sheet = workbook.getSheetAt(0);
-            List<Anime> animeList = new ArrayList<Anime>();
+            List<Anime> animeList = new ArrayList<>();
 
             for (Row row : sheet) {
                 int i = 0;
                 String title = null, studio = null, date = null, type = null;
-                List<String> genre = new ArrayList<String>();
+                List<String> genre = new ArrayList<>();
                 for (Cell cell : row) {
                     if(!cell.getStringCellValue().isEmpty()) {
                         if(i == 0) {
@@ -38,7 +37,7 @@ public class AnimeSource {
                     }
                     i++;
                 }
-                if(type!=null&&genre!=null) {
+                if(type!=null) {
                     Anime ani = new Anime(title, studio, date, type, genre);
                     animeList.add(ani);
                 }

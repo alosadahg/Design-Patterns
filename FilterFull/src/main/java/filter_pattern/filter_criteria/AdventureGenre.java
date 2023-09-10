@@ -9,7 +9,7 @@ public class AdventureGenre implements Criteria{
 
     @Override
     public List<Anime> meetsCriteria(List<Anime> animeList) {
-        List<Anime> adventureAnime = new ArrayList<Anime>();
+        List<Anime> adventureAnime = new ArrayList<>();
         for(Anime anime: animeList) {
             List<String> genre = anime.getGenre();
             if(genre.contains("Adventure")) {
@@ -20,8 +20,6 @@ public class AdventureGenre implements Criteria{
     }
     @Override
     public boolean meetsCriteria(Anime anime) {
-        if(anime.getGenre().contains("Adventure"))
-            return true;
-        return false;
+        return anime.getGenre().contains("Adventure");
     }
 }

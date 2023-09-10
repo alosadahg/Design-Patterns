@@ -9,7 +9,7 @@ public class ActionGenre implements Criteria{
 
     @Override
     public List<Anime> meetsCriteria(List<Anime> animeList) {
-        List<Anime> actionAnime = new ArrayList<Anime>();
+        List<Anime> actionAnime = new ArrayList<>();
         for(Anime anime: animeList) {
             List<String> genre = anime.getGenre();
             if(genre.contains("Action")) {
@@ -21,8 +21,6 @@ public class ActionGenre implements Criteria{
 
     @Override
     public boolean meetsCriteria(Anime anime) {
-        if(anime.getGenre().contains("Action"))
-            return true;
-        return false;
+        return anime.getGenre().contains("Action");
     }
 }
