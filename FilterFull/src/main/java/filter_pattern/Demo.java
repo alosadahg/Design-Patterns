@@ -34,14 +34,14 @@ public class Demo {
                 break;
             }
             if(filter.contains("Type"))
-                type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "TV Series"});
+                type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "Series"});
             if(filter.contains("Genre"))
                 genresAdded = reuseSelection(genresAdded, "genre","%-8s %-11s %-8s %-9s %-10s", new String[]{"Action", "Adventure", "Comedy", "Mystery", "Romance"});
 
-            if(type.contains("Movie") && !type.contains("TV Series")) {
+            if(type.contains("Movie") && !type.contains("Series")) {
                 filtersSelected.add(movie);
             }
-            else if (type.contains("TV Series") && !type.contains("Movie")) {
+            else if (type.contains("Series") && !type.contains("Movie")) {
                 filtersSelected.add(tv);
             }
             if(genresAdded.contains("Action")) {
