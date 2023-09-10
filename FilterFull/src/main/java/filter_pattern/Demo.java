@@ -10,7 +10,7 @@ public class Demo {
     public static void main(String[] args) {
         AnimeSource reader = new AnimeSource();
         System.out.println("Welcome to KBP's Anime Filter");
-        System.out.println("Find the perfect anime to watch!");
+        System.out.println("Find the perfect anime to watch!\n");
 
         List<Anime> animeList = reader.generateAnime();
 
