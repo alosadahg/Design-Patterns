@@ -33,8 +33,10 @@ public class Demo {
             if(filter.isEmpty()) {
                 break;
             }
-            type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "TV Series"});
-            genresAdded = reuseSelection(genresAdded, "genres","%-8s %-11s %-8s %-9s %-10s", new String[]{"Action", "Adventure", "Comedy", "Mystery", "Romance"});
+            if(filter.contains("Type"))
+                type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "TV Series"});
+            if(filter.contains("Genre"))
+                genresAdded = reuseSelection(genresAdded, "genre","%-8s %-11s %-8s %-9s %-10s", new String[]{"Action", "Adventure", "Comedy", "Mystery", "Romance"});
 
             if(type.contains("Movie") && !type.contains("TV Series")) {
                 filtersSelected.add(movie);
