@@ -44,7 +44,6 @@ public class Demo {
             else if (type.contains("TV Series") && !type.contains("Movie")) {
                 filtersSelected.add(tv);
             }
-            System.out.println("filters:" + filtersSelected);
             if(genresAdded.contains("Action")) {
                 filtersSelected.add(action);
             }
@@ -122,6 +121,10 @@ public class Demo {
         }
         if(l1.isEmpty()) {
             l1 = getSelection(id,spacing, options);
+            while(l1.contains("Invalid")) {
+                System.out.println("Invalid input. Please try again");
+                l1 = getSelection(id,spacing, options);
+            }
         }
         printStringList(l1,id);
         return l1;
@@ -138,11 +141,14 @@ public class Demo {
         if(input.contains("exit")) {
             return filter;
         }
+        boolean flag = false;
         for(String o: options) {
             if(input.contains(o.toLowerCase())) {
                 filter.add(o);
+                flag = true;
             }
         }
+        if(!flag) filter.add("Invalid");
         return filter;
     }
 }
