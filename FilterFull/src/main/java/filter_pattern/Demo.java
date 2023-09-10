@@ -82,7 +82,7 @@ public class Demo {
     }
 
     public static void printStringList(List<String> sList, String id) {
-        System.out.println("Here are the " + id + " selected:");
+        System.out.println("\nHere are the " + id + " selected:");
         int last = sList.size()-1;
         int i = 0;
         for(String s: sList) {
@@ -92,7 +92,7 @@ public class Demo {
             }
             i++;
         }
-        System.out.println();
+        System.out.println("\n");
     }
 
     public static void printAnimeList(List<Anime> animeList) {
@@ -135,8 +135,10 @@ public class Demo {
         String input;
         List<String> filter = new ArrayList<>();
         System.out.printf("Please enter a " + id + " (you may also select multiple " + id +"s, " +
-                "just separate each " + id + " with a comma):" +
-                "\n"+spacing+"\n", (Object[]) options);
+                "just separate each " + id + " with a comma)\n"  +
+                "Example input: " + options[0] + "," + options[1] +
+                "\nAvailable " +id+ "s: " +spacing, (Object[]) options);
+        System.out.print("\nInput chosen " + id + "s: ");
         input = scan.nextLine().toLowerCase();
         if(input.contains("exit")) {
             return filter;
