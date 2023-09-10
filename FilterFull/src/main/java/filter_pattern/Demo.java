@@ -135,7 +135,7 @@ public class Demo {
         String input;
         List<String> filter = new ArrayList<>();
         System.out.printf("Please enter a " + id + " (you may also select multiple " + id +"s, " +
-                "just separate them with a comma):" +
+                "just separate each " + id + " with a comma):" +
                 "\n"+spacing+"\n", (Object[]) options);
         input = scan.nextLine().toLowerCase();
         if(input.contains("exit")) {
