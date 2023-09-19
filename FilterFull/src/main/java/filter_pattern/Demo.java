@@ -27,12 +27,14 @@ public class Demo {
         List<String> type = new ArrayList<>();
         List<String> filter = new ArrayList<>();
 
+
         while(true){
             List<Criteria> filtersSelected = new ArrayList<>();
             filter = reuseSelection(filter, "filter","%-7s %-8s %-7s",new String[] {"Type", "Genre", "Exit"});
             if(filter.isEmpty()) {
                 break;
             }
+
             if(filter.contains("Type"))
                 type = reuseSelection(type, "type", "%-7s %-4s", new String[]{"Movie", "Series"});
             if(filter.contains("Genre"))
@@ -60,19 +62,30 @@ public class Demo {
                 filtersSelected.add(romance);
             }
 
-            List<Anime> filtered;
+            List<Anime> filtered = null;
+
+            AndCriteria andSearch = new AndCriteria(filtersSelected);
+
+            System.out.println("How do you want to filter? " +
+                    "\n1. Include the chosen filters\n");
+            int chosen = scan.nextInt();
+            scan.nextLine();
+            if(chosen==1) {
+                filtered = andSearch.meetsCriteria(animeList);
+            } else {
+                System.out.println("Invalid input.");
+            }
 
             System.out.println("\nHere is the generated list of anime:");
-            AndCriteria searchGenre = new AndCriteria(filtersSelected);
-            filtered = searchGenre.meetsCriteria(animeList);
 
-            if(!filtered.isEmpty())
+            if(!(filtered != null && filtered.isEmpty()))
                 printAnimeList(filtered);
             else
                 System.out.println("(There is no anime found with those filters. Please try again.)");
 
             System.out.println("\nPerform another filter? Y/N");
-            String again = scan.nextLine().toLowerCase();
+            String again = scan.next().toLowerCase();
+            scan.nextLine();
             if (again.charAt(0) != 'y') {
                 break;
             }
@@ -106,16 +119,20 @@ public class Demo {
             if(sLen > studioMax)
                 studioMax = sLen;
         }
+        int count = 0;
         for(Anime a: animeList) {
             a.printAnime(titleMax,studioMax);
+            count++;
         }
+        System.out.println("Anime generated: " + count);
     }
     public static List<String> reuseSelection(List<String> l1, String id, String spacing, String[] options) {
         Scanner scan = new Scanner(System.in);
         if(!l1.isEmpty()) {
             System.out.println("Do you want to use the same " + id +
                     " you have selected recently? Y/N");
-            String reuse = scan.nextLine().toLowerCase();
+            String reuse = scan.next().toLowerCase();
+            scan.nextLine();
             if (reuse.charAt(0) != 'y')
                 l1.clear();
         }
